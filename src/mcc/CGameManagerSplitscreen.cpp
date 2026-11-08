@@ -226,10 +226,11 @@ CGamepadMapping* CGameManager::retrive_gamepad_mapping(CGameManager *self, __int
         MATCH_LOG("retrive_gamepad_mapping xid={:#x} -> index {} (caller {})", (unsigned long long)xid, index,
                   Describe(_ReturnAddress()));
 
-    // Player 0's controller profile (Xbox menu button mapping) is not a splitscreen-only
-    // feature and must apply in every game/mode, so it's kept independent of b_override.
+    // galleon patch: Player 1 always keeps the game's own controller settings
+    // (whatever layout MCC's Settings > Controls shows). The mod's profiles only
+    // apply to players 2-4, who have no MCC settings of their own.
     if (!index)
-        return &get_profile(0)->mapping;
+        return ppOriginal.retrive_gamepad_mapping(self, xid);
 
     if (!p_setting->b_override)
         return ppOriginal.retrive_gamepad_mapping(self, xid);
