@@ -410,7 +410,7 @@ namespace MCC::Splitscreen {
 
         SharedPlayerContext(index);
 
-        bool is_disabled = (!index && !p_setting->b_override_profile) || (index && p_setting->b_use_player0_profile);
+        bool is_disabled = !index || (index && p_setting->b_use_player0_profile); // galleon: P1 uses MCC's own controls
 
         if (ImGui::CollapsingHeader("Gamepad Mapping")) {
             ImGui::Indent();
